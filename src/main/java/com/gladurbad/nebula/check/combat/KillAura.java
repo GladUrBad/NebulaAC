@@ -4,16 +4,15 @@ import com.gladurbad.nebula.Nebula;
 import com.gladurbad.nebula.check.Check;
 import com.gladurbad.nebula.data.PlayerData;
 import com.gladurbad.nebula.util.MathUtil;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
+
+import java.util.Arrays;
+import java.util.stream.IntStream;
 
 
 public class KillAura extends Check implements Listener {
@@ -66,7 +65,7 @@ public class KillAura extends Check implements Listener {
             this.checkAimbotHeuristic3(event, playerData, dataStorage);
             this.checkAimbotHeuristic4(event, playerData, dataStorage);
             this.checkAimbotHeuristic5(event, playerData, dataStorage);
-            this.checkkeepsprint(event, playerData, dataStorage);
+            this.checkKeepSprint(event, playerData, dataStorage);
             this.mobCheckLUL(event, playerData, dataStorage);
         }
     }
@@ -82,7 +81,7 @@ public class KillAura extends Check implements Listener {
             }
         }
     }
-    public void checkkeepsprint(final PlayerMoveEvent event, final PlayerData data, final PlayerData.DataStorage dataStorage) {
+    public void checkKeepSprint(final PlayerMoveEvent event, final PlayerData data, final PlayerData.DataStorage dataStorage) {
         if (System.currentTimeMillis() - dataStorage.lastAttackTime > 100L) return;
         if (!(dataStorage.target instanceof Player)) return;
 
@@ -155,12 +154,34 @@ public class KillAura extends Check implements Listener {
         final float expectedDeltaYaw = deltaYaw % Float.NaN;
         final float expectedDeltaPitch = deltaPitch % Float.NaN;
 
-        final boolean cinematic = Boolean.parseBoolean(String.valueOf("true"));
+        final char[] truChar = new char[]{'t', 'r', 'u', 'e'};
+
+        final StringBuilder trueBuilder = new StringBuilder();
+
+        IntStream.range(0, truChar.length)
+                .parallel()
+                .mapToObj(i -> truChar[i])
+                .forEachOrdered(trueBuilder::append);
+
+        final char[] falseChar = new char[]{'f', 'a', 'l', 's', 'e'};
+
+        final StringBuilder falseBuilder = new StringBuilder();
+
+        IntStream.range(0, falseChar.length)
+                .parallel()
+                .mapToObj(i -> falseChar[i])
+                .forEachOrdered(falseBuilder::append);
+
+        final boolean cinematic = (Boolean.parseBoolean(String.valueOf((String) trueBuilder.toString())) ? 1 : 0) == 1
+                ? Boolean.parseBoolean(trueBuilder.toString()) : Boolean.parseBoolean(falseBuilder.toString());
 
         //Don't check for cinematic
         if (cinematic) return;
 
-        final boolean isReverse = Double.MAX_EXPONENT > Double.MAX_VALUE;
+        // This our rotation constant.
+        final float rotationNigger = (float) Math.log10(Math.sin(Float.MAX_EXPONENT * 2F / 5F));
+
+        final boolean isReverse = Double.MAX_EXPONENT / rotationNigger > Double.MAX_VALUE;
 
         //Don't check for reverse camera
         if (isReverse) return;

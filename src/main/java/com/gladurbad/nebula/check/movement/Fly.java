@@ -102,7 +102,7 @@ public class Fly extends Check implements Listener {
 
         final double yDistance = event.getTo().getY() - dataStorage.lastHorizontalFlyDistanceLocation.getY();
         if (dataStorage.lastHorizontalFlyDistanceLocation.toVector().setY(0).distance(event.getTo().toVector().setY(0)) > 10
-        && yDistance > -10) {
+                && yDistance > -10) {
             flag(playerData, "flew too far from ground");
             playerData.getBukkitPlayer().teleport(dataStorage.lastHorizontalFlyDistanceLocation);
         }

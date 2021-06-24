@@ -10,7 +10,7 @@ import java.util.UUID;
 
 public class PlayerDataManager {
 
-    private final Map<UUID, PlayerData> playerDataMap = new HashMap<UUID, PlayerData>();
+    private final Map<UUID, PlayerData> playerDataMap = new HashMap<>();
 
     public PlayerData getPlayerData(final Player player) {
         return playerDataMap.get(player.getUniqueId());
