@@ -164,7 +164,6 @@ public class Speed extends Check implements Listener {
         double maxAirSpeed = getSpeed(0.362D, player);
         double maxAfterJumpAirSpeed = getAfterJumpSpeed(player);
 
-
         final int airTicks = dataStorage.speedAirTicks;
         final int groundTicks = dataStorage.speedGroundTicks;
 
@@ -220,7 +219,7 @@ public class Speed extends Check implements Listener {
     }
 
 
-    private double getSpeed(double movement, Player player) {
+    private double getSpeed(double movement, final Player player) {
         if (PlayerUtil.getPotionLevel(player, PotionEffectType.SPEED) > 0) {
             movement *= 1.0D + 0.2D * (double)(PlayerUtil.getPotionLevel(player, PotionEffectType.SPEED));
         }
@@ -228,7 +227,7 @@ public class Speed extends Check implements Listener {
     }
 
     //Slightly inaccurate, maybe going to improve the math on this one more later.
-    private double getAfterJumpSpeed(Player player) {
+    private double getAfterJumpSpeed(final Player player) {
         return 0.62 + 0.033 * (double) (PlayerUtil.getPotionLevel(player, PotionEffectType.SPEED));
     }
 }

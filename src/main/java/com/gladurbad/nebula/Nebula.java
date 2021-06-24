@@ -21,10 +21,9 @@ public class Nebula extends JavaPlugin {
 
     @Override
     public void onEnable() {
-
         instance = this;
 
-        PluginManager pm = Bukkit.getPluginManager();
+        final PluginManager pluginManager = Bukkit.getPluginManager();
 
         /*
         Parallel streams will always be faster, I did testing with it on Kauri.
@@ -33,11 +32,11 @@ public class Nebula extends JavaPlugin {
          */
         Bukkit.getServer().getOnlinePlayers().parallelStream().forEach(playerDataManager::add);
 
-        pm.registerEvents(new JoinQuitListener(), this);
-        pm.registerEvents(new Reach("Reach"), this);
-        pm.registerEvents(new Speed("Speed"), this);
-        pm.registerEvents(new Fly("Fly"), this);
-        pm.registerEvents(new KillAura("KillAura"), this);
+        pluginManager.registerEvents(new JoinQuitListener(), this);
+        pluginManager.registerEvents(new Reach("Reach"), this);
+        pluginManager.registerEvents(new Speed("Speed"), this);
+        pluginManager.registerEvents(new Fly("Fly"), this);
+        pluginManager.registerEvents(new KillAura("KillAura"), this);
     }
 
     @Override
